@@ -74,9 +74,9 @@ class Python25Parser(Python26Parser):
         return_stmt_lambda ::= ret_expr RETURN_VALUE_LAMBDA
         setupwithas      ::= DUP_TOP LOAD_ATTR ROT_TWO LOAD_ATTR CALL_FUNCTION_0 setup_finally
         stmt             ::= classdefdeco
-        stmt             ::= conditional_lambda
+        stmt             ::= if_expr_lambda
         stmt             ::= conditional_not_lambda
-        conditional_lambda ::= expr jmp_false_then expr return_if_lambda
+        if_expr_lambda   ::= expr jmp_false_then expr return_if_lambda
                                return_stmt_lambda LAMBDA_MARKER
         conditional_not_lambda
                            ::= expr jmp_true_then expr return_if_lambda
@@ -85,15 +85,17 @@ class Python25Parser(Python26Parser):
         super(Python25Parser, self).customize_grammar_rules(tokens, customize)
         if self.version == 2.5:
             self.check_reduce['try_except'] = 'tokens'
+        self.check_reduce['aug_assign1'] = 'AST'
 
-    ## Don't need this for 2.5 yet..
-    # def reduce_is_invalid(self, rule, ast, tokens, first, last):
-    #     invalid = super(Python25Parser,
-    #                     self).reduce_is_invalid(rule, ast,
-    #                                             tokens, first, last)
-    #     if invalid or tokens is None:
-    #         return invalid
-    #     return False
+    def reduce_is_invalid(self, rule, ast, tokens, first, last):
+        invalid = super(Python25Parser,
+                        self).reduce_is_invalid(rule, ast,
+                                                tokens, first, last)
+        if invalid or tokens is None:
+            return invalid
+        if rule == ('aug_assign1', ('expr', 'expr', 'inplace_op', 'store')):
+            return ast[0][0] == 'and'
+        return False
 
 
 class Python25ParserSingle(Python26Parser, PythonParserSingle):

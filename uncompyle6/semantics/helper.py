@@ -50,7 +50,7 @@ def find_globals_and_nonlocals(node, globs, nonlocals, code, version):
 #         # print("XXX", n.kind, global_ops)
 #         if isinstance(n, SyntaxTree):
 #             # FIXME: do I need a caser for n.kind="mkfunc"?
-#             if n.kind in ("conditional_lambda", "return_lambda"):
+#             if n.kind in ("if_expr_lambda", "return_lambda"):
 #                 globs = find_globals(n, globs, mklambda_globals)
 #             else:
 #                 globs = find_globals(n, globs, global_ops)
@@ -67,6 +67,36 @@ def find_none(node):
         elif n.kind == 'LOAD_CONST' and n.pattr is None:
             return True
     return False
+
+def escape_string(str, quotes=('"', "'", '"""', "'''")):
+    quote = None
+    for q in quotes:
+        if str.find(q) == -1:
+            quote = q
+            break
+        pass
+    if quote is None:
+        quote = '"""'
+        str = str.replace('"""', '\\"""')
+
+    for (orig, replace) in (('\t', '\\t'),
+                            ('\n', '\\n'),
+                            ('\r', '\\r')):
+        str = str.replace(orig, replace)
+    return "%s%s%s" % (quote, str, quote)
+
+def strip_quotes(str):
+    if str.startswith("'''") and str.endswith("'''"):
+        str = str[3:-3]
+    elif str.startswith('"""') and str.endswith('"""'):
+        str = str[3:-3]
+    elif str.startswith("'") and str.endswith("'"):
+        str = str[1:-1]
+    elif str.startswith('"') and str.endswith('"'):
+        str = str[1:-1]
+        pass
+    return str
+
 
 def print_docstring(self, indent, docstring):
     try:
@@ -148,10 +178,12 @@ def flatten_list(node):
     for elem in node:
         if elem == 'expr1024':
             for subelem in elem:
+                assert subelem == 'expr32'
                 for subsubelem in subelem:
                     flat_elems.append(subsubelem)
         elif elem == 'expr32':
             for subelem in elem:
+                assert subelem == 'expr'
                 flat_elems.append(subelem)
         else:
             flat_elems.append(elem)

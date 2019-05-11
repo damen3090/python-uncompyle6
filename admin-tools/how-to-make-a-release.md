@@ -30,9 +30,9 @@
 
     $ make ChangeLog
 
-#  Update NEWS from ChangeLog:
+#  Update NEWS.md from ChangeLog:
 
-    $ emacs NEWS
+    $ emacs NEWS.md
     $ make check
     $ git commit --amend .
     $ git push   # get CI testing going early
@@ -58,7 +58,8 @@
     $ git tag release-python-2.4-$VERSION
 
     $ . ./admin-tools/make-dist-newer.sh
-    $ git tag release-$VERSION
+
+Goto https://github.com/rocky/python-uncompyle6/releases
 
 # Upload single package and look at Rst Formating
 

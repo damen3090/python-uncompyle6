@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright   = """
-Copyright (C) 2015-2018 Rocky Bernstein <rb@dustyfeet.com>.
+Copyright (C) 2015-2019 Rocky Bernstein <rb@dustyfeet.com>.
 """
 
 classifiers =  ['Development Status :: 5 - Production/Stable',
@@ -43,6 +43,7 @@ classifiers =  ['Development Status :: 5 - Production/Stable',
                 'Programming Language :: Python :: 3.5',
                 'Programming Language :: Python :: 3.6',
                 'Programming Language :: Python :: 3.7',
+                'Programming Language :: Python :: 3.8',
                 'Topic :: Software Development :: Debuggers',
                 'Topic :: Software Development :: Libraries :: Python Modules',
                 ]
@@ -56,8 +57,8 @@ entry_points       = {
         'pydisassemble=uncompyle6.bin.pydisassemble:main',
     ]}
 ftp_url            = None
-install_requires   = ['spark-parser >= 1.8.5, < 1.9.0',
-                      'xdis >= 3.8.6, < 3.9.0']
+install_requires   = ['spark-parser >= 1.8.7, < 1.9.0',
+                      'xdis >= 4.0.1, < 4.1.0']
 
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'

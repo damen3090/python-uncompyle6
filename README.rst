@@ -12,7 +12,7 @@ Introduction
 
 *uncompyle6* translates Python bytecode back into equivalent Python
 source code. It accepts bytecodes from Python version 1.3 to version
-3.7, spanning over 22 years of Python releases. We include Dropbox's
+3.8, spanning over 24 years of Python releases. We include Dropbox's
 Python 2.5 bytecode and some PyPy bytecode.
 
 Why this?
@@ -76,7 +76,7 @@ Requirements
 The code here can be run on Python versions 2.6 or later, PyPy 3-2.4,
 or PyPy-5.0.1.  Python versions 2.4-2.7 are supported in the
 python-2.4 branch.  The bytecode files it can read have been tested on
-Python bytecodes from versions 1.4, 2.1-2.7, and 3.0-3.6 and the
+Python bytecodes from versions 1.4, 2.1-2.7, and 3.0-3.8 and the
 above-mentioned PyPy versions.
 
 Installation
@@ -194,8 +194,12 @@ Between Python 3.5, 3.6 and 3.7 there have been major changes to the
 
 Currently not all Python magic numbers are supported. Specifically in
 some versions of Python, notably Python 3.6, the magic number has
-changes several times within a version. We support only the released
-magic. There are also customized Python interpreters, notably Dropbox,
+changes several times within a version. 
+
+**We support only released versions, not candidate versions.** Note however
+that the magic of a released version is usually the same as the _last_ candidate version prior to release 
+
+There are also customized Python interpreters, notably Dropbox,
 which use their own magic and encrypt bytcode. With the exception of
 the Dropbox's old Python 2.5 interpreter this kind of thing is not
 handled.
@@ -226,7 +230,7 @@ See Also
 * https://github.com/rocky/python-uncompyle6/wiki : Wiki Documents which describe the code and aspects of it in more detail
 
 
-.. _trepan: https://pypi.python.org/pypi/trepan2
+.. _trepan: https://pypi.python.org/pypi/trepan2g
 .. _compiler: https://pypi.python.org/pypi/spark_parser
 .. _HISTORY: https://github.com/rocky/python-uncompyle6/blob/master/HISTORY.md
 .. _debuggers: https://pypi.python.org/pypi/trepan3k
